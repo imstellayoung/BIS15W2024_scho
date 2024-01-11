@@ -61,7 +61,7 @@ Order of operations applies and you don't need to add an '=' sign.
 
 What is going on here? How do we adjust this expression so the output is 12?
 ```{r}
-4-2*6
+(4-2)*6
 ```
 
 
@@ -69,22 +69,39 @@ Statistics are what R was originally written for and there are thousands of pack
 
 First, we need to make a vector or string of values which we will store as an object x. More on this later...
 ```{r}
-x <- c(4, 6, 8, 5, 6, 7, 7, 7)
+x<-c(4,6,8,5,6,7,7,7)
+```
+
+```{r}
+y<-c(100,14,78,93472,67)
 ```
 
 Now we can calculate the mean of object x.  
 ```{r}
 mean(x)
 ```
+```{r}
+mean(y)
+```
 
 We can do the same thing for median.  
 ```{r}
 median(x)
 ```
+```{r}
+median(y)
+```
 
 ```{r}
 sd(x)
 ```
+```{r}
+sd(y)
+```
+
+```{r}
+z<--100
+``` 
 
 ## RMarkdown  
 Annotation of code is important for programmers of all levels. When code is annotated, it is easy for others to understand and perhaps more importantly, easier for the person who wrote the code to understand when returning to a project days, months, or even years later. RMarkdown allows us to embed code in annotated chunks, show the results of analyses, and display graphical output all in one file. It is a great way of making a report which can be conveniently output to html or pdf.  
@@ -117,6 +134,23 @@ In order to make the html file, you need to "Knit" the file. Knitting just means
 
 ## Practice
 1. Test out the arithmetic capabilities of R; experiment by doing addition, subtraction, multiplication, and division.  
+
+```{r}
+q<-c(40,56,78,99)
+```
+
+```{r}
+sum(q)
+```
+
+```{r}
+l<-c(56,900,24,67,78)
+```
+
+```{r}
+sum(q)+sum(l)
+```
+
 2. Go back to your "RMarkdown Practice" file and experiment with titles, text, and syntax.  
 3. Copy and paste the following two pieces of code into the document (include the gray code "chunks").      
 

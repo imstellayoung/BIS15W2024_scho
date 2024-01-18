@@ -1,0 +1,65 @@
+---
+title: ''
+output: html_document
+date: "2024-01-18"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### 1. Build Height Vector
+```{r}
+new_vector_1 <- c(30.7, 37.6, 28.4, NA, 33.2)
+```
+
+### 2. Build Mass Vector
+```{r}
+new_vector_2 <- c(4, 5.2, 3.7, NA, 4.6)
+```
+
+### 3. Build Data Matrix
+```{r}
+box_office <- c(new_vector_1, new_vector_2)
+box_office
+```
+
+```{r}
+plant_matrix <- matrix(box_office, nrow = 2, byrow = T)
+plant_matrix
+```
+
+```{r}
+measurements <- c("height", "mass")
+measurements
+```
+
+```{r}
+titles <- c("plant_1", "plant_2", "plant_3", "plant_4", "plant_5")
+titles
+```
+
+###. 4. Name Columns and Rows
+```{r}
+rownames(plant_matrix) <- measurements
+```
+
+```{r}
+colnames(plant_matrix) <- titles
+```
+
+```{r}
+plant_matrix
+```
+
+### 5. Calculate Meand of Each Column
+```{r}
+plant_means <- rowMeans(plant_matrix, na.rm=T)
+plant_means
+```
+
+### 6. Add this to New Row 
+```{r}
+plant_matrix_final <- cbind(plant_matrix, plant_means)
+plant_matrix_final
+```

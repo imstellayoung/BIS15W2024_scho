@@ -1,0 +1,99 @@
+---
+title: "lab_6_warmup"
+output: html_document
+date: "2024-01-30"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1. Load bison.csv data
+```{r}
+library("tidyverse")
+```
+
+```{r}
+bison <- readr::read_csv("data/bison.csv")
+```
+## 2. Dimensions and Structure of Data
+```{r}
+dim(bison)
+```
+
+```{r}
+str(bison)
+```
+
+## 3. Restrict data
+```{r}
+new_bison <- select(bison, "data_code", "animal_sex", "animal_weight", "animal_yob")
+new_bison
+```
+
+```{r}
+bison %>%  ## how professor did it
+  select(animal_code, animal_sex, animal_weight, animal_yob)
+```
+
+## 4. Pull out animals between 1980-1990
+```{r}
+restrict_bison <- filter(new_bison, between(animal_yob, 1980, 1990))
+restrict_bison
+```
+
+```{r}
+new_bison %>% 
+  filter(animal_yob>=1980 & animal_yob<=1990) ## another way to do it
+```
+
+## 5. Males or females are larger on average
+Females are larger
+```{r}
+female_bison <- restrict_bison %>% 
+  select(animal_sex, animal_weight) %>% 
+  filter(animal_sex=="F") %>% 
+  arrange(animal_weight)
+female_bison
+```
+
+```{r}
+mean(female_bison$animal_weight)
+```
+
+```{r}
+male_bison <- restrict_bison %>% 
+  select(animal_sex, animal_weight) %>% 
+  filter(animal_sex=="M") %>% 
+  arrange(animal_weight)
+male_bison
+```
+
+```{r}
+mean(male_bison$animal_weight, na.rm = T)
+```
+
+```{r}
+males <- new_bison %>% 
+  filter(animal_yob>=1980 & animal_yob<=1990) %>% 
+  filter(animal_sex=="M") %>% 
+  arrange(animal_weight)
+males
+```
+
+```{r}
+females <- new_bison %>% 
+  filter(animal_yob>=1980 & animal_yob<=1990) %>% 
+  filter(animal_sex=="F") %>% 
+  arrange(animal_weight)
+females 
+```
+
+```{r}
+mean(males$animal_weight)
+```
+
+```{r}
+mean(females$animal_weight)
+```
+

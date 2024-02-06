@@ -2,10 +2,11 @@
 title: "summarize practice, `count()`, `across()`"
 date: "`r Sys.Date()`"
 output:
-  html_document:
+  html_document: 
     theme: spacelab
-    toc: yes
-    toc_float: yes
+    toc: true
+    toc_float: true
+    keep_md: true
   pdf_document:
     toc: yes
 ---
@@ -31,21 +32,30 @@ glimpse(penguins)
 
 As biologists, a good question that we may ask is how do the measured variables differ by island (on average)?
 ```{r}
-
+levels(penguins$island) #because island is a facotr, we can use level(s) to see unique values
 ```
 
 ```{r}
-
+penguins %>% 
+  group_by(island) %>% 
+  summarize(mean_body_mass=mean(body_mass_g),
+            n=n())
 ```
 
 Why do we have NA here? Do all of these penguins lack data?
 ```{r}
-
+penguins %>% 
+  group_by(island) %>% 
+  summarize(number_NAs=sum(is.na(body_mass_g)))
 ```
 
 Well, that won't work so let's remove the NAs and recalculate.
 ```{r}
-
+penguins %>% 
+  filter(!is.na(body_mass_g)) %>%  #pull out all of the observations with a number and leave behind the NA's
+  group_by(island) %>% 
+  summarize(mean_body_mass=mean(body_mass_g),
+            n=n())
 ```
 
 What if we are interested in the number of observations (penguins) by species and island?
@@ -79,18 +89,22 @@ penguins %>%
 
 For counts, I also like `tabyl()`. Lots of options are supported in [tabyl](https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html)
 ```{r}
-
+penguins %>% 
+  tabyl(island, species)
 ```
 
 ## Practice
 1. How does the mean of `bill_length_mm` compare between penguin species?
 ```{r}
-
+penguins %>% 
+  group_by(species) %>% 
+  summarize(mean_bill_length_mm=mean(bill_length_mm, na.rm=T))
 ```
 
 2. For some penguins, their sex is listed as NA. Where do these penguins occur?
 ```{r}
-
+penguins %>% 
+  count(sex, island)
 ```
 
 ## `across()`
@@ -150,7 +164,10 @@ penguins %>%
 ## Practice
 1. Produce separate summaries of the mean and standard deviation for bill_length_mm, bill_depth_mm, and flipper_length_mm for each penguin species. Be sure to provide the number of samples.  
 ```{r}
-
+penguins %>% 
+  group_by(species) %>% 
+  summarize(across(contains("mm"), sd, na.rm=T),
+            n_samples=n())
 ```
 
 ## Wrap-up  

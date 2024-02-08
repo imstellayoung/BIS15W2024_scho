@@ -64,6 +64,13 @@ Problem 4. (4 points) Which park has the largest number of wolf packs?
 wolves %>% 
   count(park, sort = T)
 ```
+```{r}
+#wolves %>% 
+  #group_by(park) %>% 
+  #sumarize(packs = n_distinct(pack)) %>% 
+  #arrange(desc(packs))
+```
+
 Problem 5. (4 points) Which park has the highest total number of human-caused mortalities `mort_all`?
 ```{r}
 wolves %>% 

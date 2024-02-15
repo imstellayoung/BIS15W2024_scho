@@ -1,0 +1,39 @@
+---
+title: "lab10_warmup"
+output: html_document
+date: "2024-02-15"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(janitor)
+```
+
+
+# 1. Load Data Set
+```{r}
+malaria <- read_csv("data/malaria.csv")
+malaria
+```
+
+```{r}
+malaria %>% clean_names()
+```
+
+# 2. Make data tidy and store as a new object
+```{r}
+malaria %>% 
+  pivot_longer(cols=starts_with("malaria_rdt"),
+               names_to = "age_class",
+               values_to = "cases")
+```
+
+# 3. Which district has the highest total number of cases on July 10, 2020?
+```{r}
+
+```
+

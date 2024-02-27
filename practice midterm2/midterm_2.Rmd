@@ -88,8 +88,14 @@ surgery %>%
 
 
 6. Create a plot that displays the distribution of body mass index for each `asa_status` as a probability distribution- not a histogram. (hint: use faceting!)
-```{r}
 
+```{r}
+surgery %>% 
+  filter(asa_status!="NA") %>% 
+  ggplot(aes(x=asa_status))+
+  geom_boxplot()+
+  facet_wrap(~bmi, ncol = 2)+
+  theme(axis.text.x = element_text(angle = 60, hjust = 1))
 ```
 
 

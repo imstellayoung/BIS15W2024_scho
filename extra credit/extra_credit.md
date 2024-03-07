@@ -1,7 +1,7 @@
 ---
 title: "Extra Credit W24"
 author: "Stella Young Cho"
-date: "`r Sys.Date()`"
+date: "2024-03-07"
 output:
   html_document: 
     keep_md: true
@@ -23,7 +23,8 @@ Be sure to follow the directions and push your code to your repository.
 In the `data` folder, you will find data about global shark attacks. The data are updated continuously, and are taken from [opendatasoft](https://public.opendatasoft.com/explore/dataset/global-shark-attack/table/?flg=en-us&disjunctive.country&disjunctive.area&disjunctive.activity).  
 
 ## Load the libraries
-```{r message=FALSE, warning=FALSE}
+
+```r
 library("tidyverse")
 library("janitor")
 library("naniar")
@@ -31,22 +32,102 @@ library("naniar")
 
 ## Load the data
 Run the following code chunk to import the data.
-```{r message=FALSE, warning=FALSE}
+
+```r
 global_sharks <- read_csv("data/global-shark-attack.csv") %>% clean_names()
 ```
 
 ## Questions
 1. (2 points) Start by doing some data exploration using your preferred function(s). What is the structure of the data? Where are the missing values and how are they represented?  
-```{r}
+
+```r
 glimpse(global_sharks)
 ```
 
-```{r}
+```
+## Rows: 6,890
+## Columns: 21
+## $ date                   <date> 2023-07-29, 2023-04-22, 2023-03-02, 2023-02-18…
+## $ year                   <dbl> 2023, 2023, 2023, 2023, 2022, 2022, 2021, 2021,…
+## $ type                   <chr> "Unprovoked", "Unprovoked", "Unprovoked", "Ques…
+## $ country                <chr> "USA", "AUSTRALIA", "SEYCHELLES", "ARGENTINA", …
+## $ area                   <chr> "Florida", "Western Australia", "Praslin Island…
+## $ location               <chr> "Tampa Bay", "Lucy's Beach", NA, "Chubut Provin…
+## $ activity               <chr> "Swimming", "Surfing", "Snorkeling", NA, "Snork…
+## $ name                   <chr> "Natalie Branda", "Max Marsden", "Arthur \xc9",…
+## $ sex                    <chr> "F", "M", "M", "M", "F", "M", "M", "M", "M", "M…
+## $ age                    <chr> "26", "30", "6", "32", NA, "21.0", "15.0", "73.…
+## $ injury                 <chr> "Superficial injuries to abomen and thighs", "B…
+## $ fatal_y_n              <chr> "N", "N", "UNKNOWN", "UNKNOWN", "N", "N", "N", …
+## $ time                   <chr> "20h00", "07h15", "Afternoon", NA, "12h30", "15…
+## $ species                <chr> NA, "Bronze whaler shark, 1.5 m", "Lemon shark"…
+## $ investigator_or_source <chr> "Fox12, 8/1/2023", "The West Australian, 4/22/2…
+## $ pdf                    <chr> NA, NA, NA, NA, "2022.07.28-Cornwall.pdf", "202…
+## $ href_formula           <chr> NA, NA, NA, NA, "http://sharkattackfile.net/spr…
+## $ href                   <chr> NA, NA, NA, NA, "http://sharkattackfile.net/spr…
+## $ case_number_19         <chr> NA, NA, NA, NA, "2022.07.28", "2022.03.09", "20…
+## $ case_number_20         <chr> NA, NA, NA, NA, "2022.7.28", "2022.03.09", "202…
+## $ original_order         <dbl> NA, NA, NA, NA, 6792, 6743, 6720, 6626, 6618, 6…
+```
+
+
+```r
 str(global_sharks)
 ```
 
+```
+## spc_tbl_ [6,890 × 21] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+##  $ date                  : Date[1:6890], format: "2023-07-29" "2023-04-22" ...
+##  $ year                  : num [1:6890] 2023 2023 2023 2023 2022 ...
+##  $ type                  : chr [1:6890] "Unprovoked" "Unprovoked" "Unprovoked" "Questionable" ...
+##  $ country               : chr [1:6890] "USA" "AUSTRALIA" "SEYCHELLES" "ARGENTINA" ...
+##  $ area                  : chr [1:6890] "Florida" "Western Australia" "Praslin Island" "Patagonia" ...
+##  $ location              : chr [1:6890] "Tampa Bay" "Lucy's Beach" NA "Chubut Province" ...
+##  $ activity              : chr [1:6890] "Swimming" "Surfing" "Snorkeling" NA ...
+##  $ name                  : chr [1:6890] "Natalie Branda" "Max Marsden" "Arthur \xc9" "Diego Barr\x92a" ...
+##  $ sex                   : chr [1:6890] "F" "M" "M" "M" ...
+##  $ age                   : chr [1:6890] "26" "30" "6" "32" ...
+##  $ injury                : chr [1:6890] "Superficial injuries to abomen and thighs" "Bite to right arm" "Left foot bitten" "Death by misadventure" ...
+##  $ fatal_y_n             : chr [1:6890] "N" "N" "UNKNOWN" "UNKNOWN" ...
+##  $ time                  : chr [1:6890] "20h00" "07h15" "Afternoon" NA ...
+##  $ species               : chr [1:6890] NA "Bronze whaler shark, 1.5 m" "Lemon shark" NA ...
+##  $ investigator_or_source: chr [1:6890] "Fox12, 8/1/2023" "The West Australian, 4/22/2023" "Midlibre, 3/18/2023" "El Pais,  2/27/2023" ...
+##  $ pdf                   : chr [1:6890] NA NA NA NA ...
+##  $ href_formula          : chr [1:6890] NA NA NA NA ...
+##  $ href                  : chr [1:6890] NA NA NA NA ...
+##  $ case_number_19        : chr [1:6890] NA NA NA NA ...
+##  $ case_number_20        : chr [1:6890] NA NA NA NA ...
+##  $ original_order        : num [1:6890] NA NA NA NA 6792 ...
+##  - attr(*, "spec")=
+##   .. cols(
+##   ..   Date = col_date(format = ""),
+##   ..   Year = col_double(),
+##   ..   Type = col_character(),
+##   ..   Country = col_character(),
+##   ..   Area = col_character(),
+##   ..   Location = col_character(),
+##   ..   Activity = col_character(),
+##   ..   Name = col_character(),
+##   ..   Sex = col_character(),
+##   ..   Age = col_character(),
+##   ..   Injury = col_character(),
+##   ..   `Fatal (Y/N)` = col_character(),
+##   ..   Time = col_character(),
+##   ..   Species = col_character(),
+##   ..   `Investigator or Source` = col_character(),
+##   ..   pdf = col_character(),
+##   ..   `href formula` = col_character(),
+##   ..   href = col_character(),
+##   ..   `Case Number...19` = col_character(),
+##   ..   `Case Number...20` = col_character(),
+##   ..   `original order` = col_double()
+##   .. )
+##  - attr(*, "problems")=<externalptr>
+```
+
 2. (3 points) Are there any "hotspots" for shark incidents? Make a plot that shows the total number of incidents for the top 10 countries? Which country has the highest number of incidents?
-```{r}
+
+```r
 global_sharks %>% 
   count(country) %>% 
   top_n(10, n) %>% 
@@ -61,9 +142,12 @@ global_sharks %>%
         axis.title.y=element_text(size=10))
 ```
 
+![](extra_credit_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+
 
 3. (3 points) Are there months of the year when incidents are more likely to occur? Make a plot that shows the total number of incidents by month. Which month has the highest number of incidents?
-```{r}
+
+```r
 global_sharks %>% 
   separate(date, into = c("yr", "month", "day"), sep = "-") %>%
   filter(month != "NA") %>% 
@@ -78,9 +162,12 @@ global_sharks %>%
         axis.title.y=element_text(size=10))
 ```
 
+![](extra_credit_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+
 
 4. (3 points) Which activity is associated with the highest number of incidents? Make a plot that compares the top 5 riskiest activities. "NA" should not be classified as an activity.
-```{r}
+
+```r
 global_sharks %>% 
   filter(activity != "NA") %>% 
   count(activity) %>% 
@@ -95,9 +182,12 @@ global_sharks %>%
         axis.title.y=element_text(size=10))
 ```
 
+![](extra_credit_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+
 
 5. (3 points) The data include information on who was attacked. Make a plot that shows the total number of fatalities by sex- are males or females more likely to be killed by sharks?
-```{r}
+
+```r
 global_sharks %>% 
   filter(fatal_y_n == "Y") %>% 
   filter(sex == "F" | sex == "M") %>% 
@@ -113,15 +203,26 @@ global_sharks %>%
         axis.title.y=element_text(size=10))
 ```
 
+![](extra_credit_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+
 
 6. (3 points) Make a plot that shows the range of age for the individuals that are attacked. Make sure to restrict sex to M or F (some of the codes used are not clear). You will also need to find a way to manage the messy age column.
-```{r}
+
+```r
 sharks_age <- global_sharks %>% 
   filter(sex == "F" | sex == "M") %>% 
   filter(!str_detect(age, "[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&'_]")) %>% mutate(age=as.numeric(age))
 ```
 
-```{r}
+```
+## Warning: There was 1 warning in `mutate()`.
+## ℹ In argument: `age = as.numeric(age)`.
+## Caused by warning:
+## ! NAs introduced by coercion
+```
+
+
+```r
 sharks_age %>% 
   ggplot(aes(x=sex, y=age, fill=sex)) + 
   geom_boxplot(alpha=0.5) +
@@ -134,9 +235,16 @@ sharks_age %>%
         axis.title.y=element_text(size=10))
 ```
 
+```
+## Warning: Removed 5 rows containing non-finite values (`stat_boxplot()`).
+```
+
+![](extra_credit_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
+
 
 7. (3 points) In the United States, what are the top 5 states where shark attacks have been recorded since 1950? Make a plot that compares the number of incidents for these 5 states.
-```{r}
+
+```r
 global_sharks %>% 
   filter(country == "USA") %>% 
   count(area) %>% 
@@ -152,19 +260,40 @@ global_sharks %>%
         axis.title.y=element_text(size=10))
 ```
 
+![](extra_credit_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
+
 
 8. (3 points) Make a new object that limits the data to only include attacks attributed to Great White Sharks. This is trickier than it sounds, you should end up with 494 observations. Look online and adapt code involving `str_detect`. Which country has the highest number of Great White Shark attacks?
 USA has the greatest number of White Shark attacks.
-```{r}
+
+```r
 global_sharks %>% 
   filter(str_detect(species, "White")) %>% 
   count(country) %>%
   arrange(desc(n))
 ```
 
+```
+## # A tibble: 36 × 2
+##    country          n
+##    <chr>        <int>
+##  1 USA            151
+##  2 AUSTRALIA      135
+##  3 SOUTH AFRICA   124
+##  4 NEW ZEALAND     17
+##  5 ITALY           16
+##  6 CROATIA          9
+##  7 GREECE           4
+##  8 CHILE            3
+##  9 BAHAMAS          2
+## 10 CANADA           2
+## # ℹ 26 more rows
+```
+
 
 9. (4 points) Use faceting to compare the number of fatal and non-fatal attacks for the top 5 countries with the highest number of Great White Shark attacks.
-```{r}
+
+```r
 global_sharks %>% 
   filter(str_detect(species, "White")) %>% 
   filter(fatal_y_n == "Y" | fatal_y_n == "N") %>% 
@@ -182,10 +311,13 @@ global_sharks %>%
         axis.title.y=element_text(size=10))
 ```
 
+![](extra_credit_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
+
 
 10. (3 points) Using the `global_sharks` data, what is one question that you are interested in exploring? Write the question and answer it using a plot or table. 
 What are the top 10 states where shark attacks have been recorded since 1950?
-```{r}
+
+```r
 global_sharks %>% 
   filter(country == "USA") %>% 
   count(area) %>% 
@@ -200,4 +332,6 @@ global_sharks %>%
         axis.text.x = element_text(angle = 60, hjust = 1),
         axis.title.y=element_text(size=10))
 ```
+
+![](extra_credit_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
 

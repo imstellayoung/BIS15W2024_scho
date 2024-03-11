@@ -246,7 +246,7 @@ In the code above, each box takes up half the available space (6 columns). Let's
 ```{r, eval=F, echo=T}
 ui <- dashboardPage(
   
-  dashboardHeader(title = "Penguins"),
+  dashboardHeader(title = "Clownfish"),
   
   dashboardSidebar(disable=T),
   
